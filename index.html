@@ -1,10 +1,12 @@
 
-<!DOCTYPE html>
+
+
+   <!DOCTYPE html>
 <html lang="uz">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>8-maktab — 8-D sinf o'quvchilari</title>
+  <title>8-maktab — 8-D sinf katalogi</title>
   <style>
     * {
       box-sizing: border-box;
@@ -16,17 +18,21 @@
       background-color: #0b0d10;
       color: #f3f4f6;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      line-height: 1.6;
-      padding: 32px 16px;
+      line-height: 1.5;
+      padding: 28px 16px;
     }
 
     .container {
-      max-width: 820px;
+      max-width: 1050px;
       margin: 0 auto;
+    }
+
+    .header-card {
       background-color: #14181f;
       border: 1px solid #262c36;
-      border-radius: 14px;
-      padding: 28px;
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 24px;
     }
 
     .top-bar {
@@ -35,21 +41,26 @@
       justify-content: space-between;
       align-items: center;
       gap: 12px;
-      margin-bottom: 20px;
+      margin-bottom: 14px;
     }
 
     .badge {
       display: inline-block;
       background-color: #1e293b;
       color: #60a5fa;
-      padding: 4px 12px;
+      padding: 5px 14px;
       border-radius: 999px;
       font-size: 0.85rem;
       font-weight: 600;
     }
 
+    .count-text {
+      color: #9ca3af;
+      font-size: 0.9rem;
+    }
+
     h1 {
-      font-size: 1.8rem;
+      font-size: 1.85rem;
       color: #ffffff;
       margin-bottom: 6px;
     }
@@ -57,18 +68,17 @@
     .subtitle {
       color: #9ca3af;
       font-size: 0.95rem;
-      margin-bottom: 22px;
+      margin-bottom: 18px;
     }
 
     .search-input {
       width: 100%;
-      padding: 12px 14px;
-      border-radius: 10px;
+      padding: 13px 16px;
+      border-radius: 12px;
       border: 1px solid #2d3542;
       background-color: #0e1116;
       color: #f9fafb;
       font-size: 1rem;
-      margin-bottom: 20px;
       outline: none;
     }
 
@@ -76,114 +86,195 @@
       border-color: #60a5fa;
     }
 
-    .student-list {
-      list-style: none;
+    /* Katalog kartochkalari (Grid) */
+    .catalog-grid {
       display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 16px;
+    }
+
+    .student-card {
+      background-color: #14181f;
+      border: 1px solid #252c38;
+      border-radius: 14px;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 12px;
+      transition: border-color 0.2s ease, transform 0.2s ease;
+    }
+
+    .student-card:hover {
+      border-color: #3b82f6;
+      transform: translateY(-2px);
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
       gap: 10px;
     }
 
-    .student-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-      background-color: #191e27;
-      border: 1px solid #252c38;
-      border-radius: 10px;
-      padding: 12px 16px;
+    .student-num {
+      font-size: 0.8rem;
+      color: #60a5fa;
+      background: #1a2333;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-weight: 600;
     }
 
     .student-name {
-      font-weight: 600;
+      font-size: 1.1rem;
+      font-weight: 700;
       color: #ffffff;
+      margin-top: 6px;
     }
 
-    .student-meta {
+    .info-row {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      border-top: 1px solid #222834;
+      padding-top: 12px;
+      font-size: 0.92rem;
+    }
+
+    .info-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      color: #d1d5db;
+    }
+
+    .info-label {
       color: #9ca3af;
-      font-size: 0.9rem;
+      min-width: 68px;
+    }
+
+    .phone-link {
+      color: #34d399;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .phone-link:hover {
+      text-decoration: underline;
+    }
+
+    .empty-box {
+      grid-column: 1 / -1;
+      text-align: center;
+      background-color: #14181f;
+      border: 1px solid #252c38;
+      border-radius: 14px;
+      padding: 32px;
+      color: #9ca3af;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <div class="top-bar">
-      <span class="badge">8-maktab • 8-D sinf</span>
-      <span class="student-meta" id="count">Jami: 26 nafar o'quvchi</span>
+    <div class="header-card">
+      <div class="top-bar">
+        <span class="badge">8-maktab • 8-D sinf katalogi</span>
+        <span class="count-text" id="count">Jami: 25 nafar o'quvchi</span>
+      </div>
+
+      <h1>O'quvchilar ma'lumotlar katalogi</h1>
+      <p class="subtitle">Ism, familiya, yashash manzili yoki telefon raqami bo'yicha qidiring.</p>
+
+      <input
+        type="text"
+        id="searchInput"
+        class="search-input"
+        placeholder="Qidirish (masalan: Abdullayev, mahalla nomi yoki telefon raqami)..."
+      />
     </div>
 
-    <h1>8-D sinf o'quvchilari ro'yxati</h1>
-    <p class="subtitle">O'quvchini tez topish uchun pastdagi qidiruv qatoriga ism yoki familiyasini yozing.</p>
-
-    <input
-      type="text"
-      id="searchInput"
-      class="search-input"
-      placeholder="O'quvchi ismini qidiring..."
-    />
-
-    <ul class="student-list" id="studentList"></ul>
+    <div class="catalog-grid" id="catalogGrid"></div>
   </div>
 
   <script>
+    // Har bir o'quvchining manzili (address) va telefon raqamini (phone) shu yerdan yangilang
     const students = [
-      { name: "Abdullayev Nuriddin", info: "8-D sinf" },
-      { name: "Abdumannonova Shaxzoda", info: "8-D sinf" },
-      { name: "Axmadjonov Shoxrux", info: "8-D sinf" },
-      { name: "Alimov Umid", info: "8-D sinf" },
-      { name: "Amridinova Shaxzoda", info: "8-D sinf" },
-      { name: "Aripova Aziza", info: "8-D sinf" },
-      { name: "Ashurov Davlat", info: "8-D sinf" },
-      { name: "Berdiyev Samirjon", info: "8-D sinf" },
-      { name: "Djamshedov Zarshed", info: "8-D sinf" },
-      { name: "Erkinov Muhammadamin", info: "8-D sinf" },
-      { name: "Erkinova Nargiza", info: "8-D sinf" },
-      { name: "Hamidov Umid", info: "8-D sinf" },
-      { name: "Hamroqulova E'zozabonu", info: "8-D sinf" },
-      { name: "Hasanboyeva Sabina", info: "8-D sinf" },
-      { name: "Juraboyeva Charos", info: "8-D sinf" },
-      { name: "Mamatkulova Charos", info: "8-D sinf" },
-      { name: "Orzikulov Laziz", info: "8-D sinf" },
-      { name: "Raxmatullayev Ulug'bek", info: "8-D sinf" },
-      { name: "Sirojov Sardor", info: "8-D sinf" },
-      { name: "Sodiqov Damir", info: "8-D sinf" },
-      { name: "Turakulov Otabek", info: "8-D sinf" },
-      { name: "Tuychikulov Jamshed", info: "8-D sinf" },
-      { name: "Ulmasov Amirjon", info: "8-D sinf" },
-      { name: "Yulbarisova Zebo", info: "8-D sinf" },
-      { name: "Zoxirov Qodir", info: "8-D sinf" }
+      { name: "Abdullayev Nuriddin", class: "8-D", address: "Manzil kiritilmagan", phone: "+998 90 000 00 00" },
+      { name: "Abdumannonova Shaxzoda", class: "8-D", address: "Manzil kiritilmagan", phone: "+998 90 000 00 00" },
+      { name: "Axmadjonov Shoxrux", class: "8-D", address: "Manzil kiritilmagan", phone: "+998 90 000 00 00" },
+      { name: "Alimov Umid", class: "8-D", address: "Manzil kiritilmagan", phone: "+998 90 000 00 00" },
+      { name: "Amridinova Shaxzoda", class: "8-D", address: "Manzil kiritilmagan", phone: "+998 90 000 00 00" },
+      { name: "Aripova Aziza", class: "8-D", address: "Manzil kiritilmagan", phone: "+998 90 000 00 00" },
+      { name: "Ashurov Davlat", class: "8-D", address: "Manzil kiritilmagan", phone: "+998 90 000 00 00" },
+      { name: "Berdiyev Samirjon", class: "8-D", address: "Manzil kiritilmagan", phone: "+998 90 000 00 00" },
+      { name: "Djamshedov Zarshed", class: "8-D", address: "Manzil kiritilmagan", phone: "+998 90 000 00 00" },
+      { name: "Erkinov Muhammadamin", class: "8-D", address: "Manzil kiritilmagan", phone: "+998 90 000 00 00" },
+      { name: "Erkinova Nargiza", class: "8-D", address: "Manzil kiritilmagan", phone: "+998 90 000 00 00" },
+      { name: "Hamidov Umid", class: "8-D", address: "Manzil kiritilmagan", phone: "+998 90 000 00 00" },
+      { name: "Hamroqulova E'zozabonu", class: "8-D", address: "Manzil kiritilmagan", phone: "+998 90 000 00 00" },
+      { name: "Hasanboyeva Sabina", class: "8-D", address: "Manzil kiritilmagan", phone: "+998 90 000 00 00" },
+      { name: "Juraboyeva Charos", class: "8-D", address: "Manzil kiritilmagan", phone: "+998 90 000 00 00" },
+      { name: "Mamatkulova Charos", class: "8-D", address: "Manzil kiritilmagan", phone: "+998 90 000 00 00" },
+      { name: "Orzikulov Laziz", class: "8-D", address: "Manzil kiritilmagan", phone: "+998 90 000 00 00" },
+      { name: "Raxmatullayev Ulug'bek", class: "8-D", address: "Manzil kiritilmagan", phone: "+998 90 000 00 00" },
+      { name: "Sirojov Sardor", class: "8-D", address: "Manzil kiritilmagan", phone: "+998 90 000 00 00" },
+      { name: "Sodiqov Damir", class: "8-D", address: "Manzil kiritilmagan", phone: "+998 90 000 00 00" },
+      { name: "Turakulov Otabek", class: "8-D", address: "Manzil kiritilmagan", phone: "+998 90 000 00 00" },
+      { name: "Tuychikulov Jamshed", class: "8-D", address: "Manzil kiritilmagan", phone: "+998 90 000 00 00" },
+      { name: "Ulmasov Amirjon", class: "8-D", address: "Manzil kiritilmagan", phone: "+998 90 000 00 00" },
+      { name: "Yulbarisova Zebo", class: "8-D", address: "Manzil kiritilmagan", phone: "+998 90 000 00 00" },
+      { name: "Zoxirov Qodir", class: "8-D", address: "Manzil kiritilmagan", phone: "+998 90 000 00 00" }
     ];
 
-    const listEl = document.getElementById("studentList");
+    const gridEl = document.getElementById("catalogGrid");
     const countEl = document.getElementById("count");
     const searchEl = document.getElementById("searchInput");
 
-    function renderStudents(filterText = "") {
+    function renderCatalog(filterText = "") {
       const query = filterText.trim().toLowerCase();
       const filtered = students.filter(s =>
-        s.name.toLowerCase().includes(query) || s.info.toLowerCase().includes(query)
+        s.name.toLowerCase().includes(query) ||
+        s.address.toLowerCase().includes(query) ||
+        s.phone.toLowerCase().includes(query)
       );
 
-      listEl.innerHTML = "";
+      gridEl.innerHTML = "";
 
       if (filtered.length === 0) {
-        listEl.innerHTML = `<li class="student-item"><span class="student-meta">Mos o'quvchi topilmadi</span></li>`;
+        gridEl.innerHTML = `<div class="empty-box">So'rovingiz bo'yicha ma'lumot topilmadi.</div>`;
       } else {
         filtered.forEach((student, index) => {
-          const li = document.createElement("li");
-          li.className = "student-item";
-          li.innerHTML = `
-            <span class="student-name">${index + 1}. ${student.name}</span>
-            <span class="student-meta">${student.info}</span>
+          const cleanPhone = student.phone.replace(/\s+/g, "");
+          const card = document.createElement("div");
+          card.className = "student-card";
+          card.innerHTML = `
+            <div>
+              <div class="card-header">
+                <span class="student-num">#${index + 1} • ${student.class}</span>
+              </div>
+              <div class="student-name">${student.name}</div>
+            </div>
+            <div class="info-row">
+              <div class="info-item">
+                <span class="info-label">Manzil:</span>
+                <span>${student.address}</span>
+              </div>
+              <div class="info-item">
+                <span class="info-label">Telefon:</span>
+                <a class="phone-link" href="tel:${cleanPhone}">${student.phone}</a>
+              </div>
+            </div>
           `;
-          listEl.appendChild(li);
+          gridEl.appendChild(card);
         });
       }
 
-      countEl.textContent = `Ko'rsatilmoqda: ${filtered.length} / ${students.length}`;
+      countEl.textContent = `Ko'rsatilmoqda: ${filtered.length} / ${students.length} nafar`;
     }
 
-    searchEl.addEventListener("input", (e) => renderStudents(e.target.value));
-    renderStudents();
+    searchEl.addEventListener("input", (e) => renderCatalog(e.target.value));
+    renderCatalog();
   </script>
 </body>
 </html>
