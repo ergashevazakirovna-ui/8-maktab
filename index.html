@@ -1,51 +1,103 @@
 
-
-
-   <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="uz">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>8-maktab — 8-D sinf katalogi</title>
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       background-color: #0b0d10;
       color: #f3f4f6;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-family: system-ui, -apple-system, sans-serif;
       line-height: 1.5;
-      padding: 28px 16px;
+      padding: 24px 16px;
+      min-height: 100vh;
     }
 
-    .container {
-      max-width: 1050px;
-      margin: 0 auto;
+    /* 1. KIRISH (PAROL) OYNASI */
+    .login-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 85vh;
     }
+    .login-box {
+      width: 100%;
+      max-width: 360px;
+      background-color: #14181f;
+      border: 1px solid #262c36;
+      border-radius: 18px;
+      padding: 28px 22px;
+      text-align: center;
+    }
+    .login-box h2 { font-size: 1.35rem; color: #fff; margin-bottom: 6px; }
+    .login-box p { color: #9ca3af; font-size: 0.9rem; margin-bottom: 18px; }
+    .pass-input {
+      width: 100%;
+      padding: 14px;
+      border-radius: 12px;
+      border: 1px solid #2d3542;
+      background-color: #0e1116;
+      color: #fff;
+      font-size: 1.3rem;
+      letter-spacing: 6px;
+      text-align: center;
+      margin-bottom: 14px;
+      outline: none;
+    }
+    .pass-input:focus { border-color: #3b82f6; }
+    .num-pad {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+    .num-btn {
+      padding: 14px;
+      background: #1c222d;
+      border: 1px solid #2a3241;
+      border-radius: 10px;
+      color: #fff;
+      font-size: 1.15rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .num-btn:active { background: #2d3748; }
+    .login-btn {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 12px;
+      background-color: #2563eb;
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .error-msg { color: #f87171; font-size: 0.88rem; margin-top: 10px; min-height: 20px; }
+
+    /* ASOSIY TUZILMA */
+    .hidden { display: none !important; }
+    .container { max-width: 1050px; margin: 0 auto; }
 
     .header-card {
       background-color: #14181f;
       border: 1px solid #262c36;
       border-radius: 16px;
-      padding: 24px;
-      margin-bottom: 24px;
+      padding: 22px;
+      margin-bottom: 22px;
     }
-
     .top-bar {
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
       margin-bottom: 14px;
     }
-
     .badge {
-      display: inline-block;
       background-color: #1e293b;
       color: #60a5fa;
       padding: 5px 14px;
@@ -53,23 +105,23 @@
       font-size: 0.85rem;
       font-weight: 600;
     }
-
-    .count-text {
-      color: #9ca3af;
-      font-size: 0.9rem;
+    .nav-btns { display: flex; flex-wrap: wrap; gap: 8px; }
+    .btn {
+      padding: 8px 14px;
+      border-radius: 10px;
+      border: 1px solid #374151;
+      background-color: #1f2937;
+      color: #f3f4f6;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
     }
+    .btn-primary { background-color: #2563eb; border-color: #2563eb; color: #fff; }
+    .btn-success { background-color: #059669; border-color: #059669; color: #fff; }
+    .btn-danger { color: #f87171; }
 
-    h1 {
-      font-size: 1.85rem;
-      color: #ffffff;
-      margin-bottom: 6px;
-    }
-
-    .subtitle {
-      color: #9ca3af;
-      font-size: 0.95rem;
-      margin-bottom: 18px;
-    }
+    h1 { font-size: 1.7rem; color: #fff; margin-bottom: 6px; }
+    .subtitle { color: #9ca3af; font-size: 0.92rem; margin-bottom: 16px; }
 
     .search-input {
       width: 100%;
@@ -82,17 +134,12 @@
       outline: none;
     }
 
-    .search-input:focus {
-      border-color: #60a5fa;
-    }
-
-    /* Katalog kartochkalari (Grid) */
+    /* 2. KATALOG KO'RINISHI */
     .catalog-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 16px;
+      gap: 14px;
     }
-
     .student-card {
       background-color: #14181f;
       border: 1px solid #252c38;
@@ -100,23 +147,8 @@
       padding: 18px;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
-      gap: 12px;
-      transition: border-color 0.2s ease, transform 0.2s ease;
-    }
-
-    .student-card:hover {
-      border-color: #3b82f6;
-      transform: translateY(-2px);
-    }
-
-    .card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
       gap: 10px;
     }
-
     .student-num {
       font-size: 0.8rem;
       color: #60a5fa;
@@ -124,113 +156,229 @@
       padding: 2px 8px;
       border-radius: 6px;
       font-weight: 600;
+      display: inline-block;
     }
-
-    .student-name {
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: #ffffff;
-      margin-top: 6px;
-    }
-
+    .student-name { font-size: 1.1rem; font-weight: 700; color: #fff; margin-top: 4px; }
     .info-row {
+      border-top: 1px solid #222834;
+      padding-top: 10px;
       display: flex;
       flex-direction: column;
-      gap: 8px;
-      border-top: 1px solid #222834;
-      padding-top: 12px;
+      gap: 6px;
       font-size: 0.92rem;
     }
+    .info-item { display: flex; gap: 8px; color: #d1d5db; }
+    .info-label { color: #9ca3af; min-width: 65px; }
+    .phone-link { color: #34d399; text-decoration: none; font-weight: 500; }
 
-    .info-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 8px;
-      color: #d1d5db;
-    }
-
-    .info-label {
-      color: #9ca3af;
-      min-width: 68px;
-    }
-
-    .phone-link {
-      color: #34d399;
-      text-decoration: none;
-      font-weight: 500;
-    }
-
-    .phone-link:hover {
-      text-decoration: underline;
-    }
-
-    .empty-box {
-      grid-column: 1 / -1;
-      text-align: center;
+    /* 3. RABOCHIY STOL (ADMIN PANEL) */
+    .workspace-box {
       background-color: #14181f;
+      border: 1px solid #262c36;
+      border-radius: 16px;
+      padding: 22px;
+    }
+    .add-form {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 10px;
+      background: #0e1116;
+      padding: 16px;
+      border-radius: 12px;
       border: 1px solid #252c38;
-      border-radius: 14px;
-      padding: 32px;
-      color: #9ca3af;
+      margin-bottom: 20px;
+    }
+    .edit-input {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 8px;
+      border: 1px solid #2d3542;
+      background-color: #14181f;
+      color: #fff;
+      font-size: 0.92rem;
+    }
+    .edit-row {
+      display: grid;
+      grid-template-columns: 36px 1.2fr 1.5fr 1fr auto;
+      gap: 10px;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid #222834;
+    }
+    @media (max-width: 768px) {
+      .edit-row { grid-template-columns: 1fr; background: #191e27; padding: 14px; border-radius: 12px; margin-bottom: 10px; }
+    }
+    .save-banner {
+      background: #064e3b;
+      color: #a7f3d0;
+      padding: 10px 14px;
+      border-radius: 10px;
+      margin-bottom: 14px;
+      font-size: 0.9rem;
     }
   </style>
 </head>
 <body>
-  <div class="container">
+
+  <!-- 1. PAROL OYNASI (PAROL: 12345) -->
+  <div class="login-wrapper" id="loginScreen">
+    <div class="login-box">
+      <h2>🔒 8-D sinf katalogi</h2>
+      <p>Kirish uchun <b>12345</b> parolini tering</p>
+      <input type="password" id="passwordInput" class="pass-input" placeholder="•••••" maxlength="10" />
+      <div class="num-pad">
+        <button class="num-btn" onclick="pressKey('1')">1</button>
+        <button class="num-btn" onclick="pressKey('2')">2</button>
+        <button class="num-btn" onclick="pressKey('3')">3</button>
+        <button class="num-btn" onclick="pressKey('4')">4</button>
+        <button class="num-btn" onclick="pressKey('5')">5</button>
+        <button class="num-btn" onclick="clearKey()">⌫</button>
+      </div>
+      <button class="login-btn" id="loginBtn">Kirish</button>
+      <div class="error-msg" id="errorMsg"></div>
+    </div>
+  </div>
+
+  <!-- 2. ASOSIY SAYT -->
+  <div class="container hidden" id="mainApp">
     <div class="header-card">
       <div class="top-bar">
-        <span class="badge">8-maktab • 8-D sinf katalogi</span>
-        <span class="count-text" id="count">Jami: 25 nafar o'quvchi</span>
+        <span class="badge">8-maktab • 8-D sinf</span>
+        <div class="nav-btns">
+          <button class="btn btn-primary" id="tabCatalog">📋 Katalog</button>
+          <button class="btn" id="tabWorkspace">⚙️ Rabochiy stol</button>
+          <button class="btn btn-danger" id="logoutBtn">Chiqish</button>
+        </div>
       </div>
 
-      <h1>O'quvchilar ma'lumotlar katalogi</h1>
-      <p class="subtitle">Ism, familiya, yashash manzili yoki telefon raqami bo'yicha qidiring.</p>
+      <!-- KATALOG SARLAVHASI -->
+      <div id="catalogHeader">
+        <h1>O'quvchilar katalogi (<span id="count">25</span> nafar)</h1>
+        <p class="subtitle">Ism, manzil yoki telefon raqami bo'yicha qidiring.</p>
+        <input type="text" id="searchInput" class="search-input" placeholder="Qidirish..." />
+      </div>
 
-      <input
-        type="text"
-        id="searchInput"
-        class="search-input"
-        placeholder="Qidirish (masalan: Abdullayev, mahalla nomi yoki telefon raqami)..."
-      />
+      <!-- RABOCHIY STOL SARLAVHASI -->
+      <div id="workspaceHeader" class="hidden">
+        <h1>⚙️ Rabochiy stol (Ma'lumotlarni tahrirlash)</h1>
+        <p class="subtitle">Shu yerdan o'quvchilarning manzili va telefon raqamini o'zgartiring yoki yangi o'quvchi qo'shing.</p>
+      </div>
     </div>
 
+    <!-- KATALOG BO'LIMI -->
     <div class="catalog-grid" id="catalogGrid"></div>
+
+    <!-- RABOCHIY STOL BO'LIMI -->
+    <div class="workspace-box hidden" id="workspaceSection">
+      <div id="saveNotice" class="save-banner hidden">✅ O'zgarishlar saqlandi!</div>
+
+      <h3 style="margin-bottom: 10px; color: #60a5fa;">+ Yangi o'quvchi qo'shish</h3>
+      <div class="add-form">
+        <input type="text" id="newName" class="edit-input" placeholder="Ism va familiyasi" />
+        <input type="text" id="newAddress" class="edit-input" placeholder="Yashash manzili" />
+        <input type="text" id="newPhone" class="edit-input" placeholder="Telefon (+998 ...)" />
+        <button class="btn btn-success" onclick="addStudent()">Qo'shish</button>
+      </div>
+
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 10px;">
+        <h3 style="color: #fff;">Ro'yxatni tahrirlash</h3>
+        <button class="btn btn-primary" onclick="saveAllChanges()">💾 Barchasini saqlash</button>
+      </div>
+
+      <div id="editList"></div>
+    </div>
   </div>
 
   <script>
-    // Har bir o'quvchining manzili (address) va telefon raqamini (phone) shu yerdan yangilang
-    const students = [
-      { name: "Abdullayev Nuriddin", class: "8-D", address: "Manzil kiritilmagan", phone: "+998 90 000 00 00" },
-      { name: "Abdumannonova Shaxzoda", class: "8-D", address: "Manzil kiritilmagan", phone: "+998 90 000 00 00" },
-      { name: "Axmadjonov Shoxrux", class: "8-D", address: "Manzil kiritilmagan", phone: "+998 90 000 00 00" },
-      { name: "Alimov Umid", class: "8-D", address: "Manzil kiritilmagan", phone: "+998 90 000 00 00" },
-      { name: "Amridinova Shaxzoda", class: "8-D", address: "Manzil kiritilmagan", phone: "+998 90 000 00 00" },
-      { name: "Aripova Aziza", class: "8-D", address: "Manzil kiritilmagan", phone: "+998 90 000 00 00" },
-      { name: "Ashurov Davlat", class: "8-D", address: "Manzil kiritilmagan", phone: "+998 90 000 00 00" },
-      { name: "Berdiyev Samirjon", class: "8-D", address: "Manzil kiritilmagan", phone: "+998 90 000 00 00" },
-      { name: "Djamshedov Zarshed", class: "8-D", address: "Manzil kiritilmagan", phone: "+998 90 000 00 00" },
-      { name: "Erkinov Muhammadamin", class: "8-D", address: "Manzil kiritilmagan", phone: "+998 90 000 00 00" },
-      { name: "Erkinova Nargiza", class: "8-D", address: "Manzil kiritilmagan", phone: "+998 90 000 00 00" },
-      { name: "Hamidov Umid", class: "8-D", address: "Manzil kiritilmagan", phone: "+998 90 000 00 00" },
-      { name: "Hamroqulova E'zozabonu", class: "8-D", address: "Manzil kiritilmagan", phone: "+998 90 000 00 00" },
-      { name: "Hasanboyeva Sabina", class: "8-D", address: "Manzil kiritilmagan", phone: "+998 90 000 00 00" },
-      { name: "Juraboyeva Charos", class: "8-D", address: "Manzil kiritilmagan", phone: "+998 90 000 00 00" },
-      { name: "Mamatkulova Charos", class: "8-D", address: "Manzil kiritilmagan", phone: "+998 90 000 00 00" },
-      { name: "Orzikulov Laziz", class: "8-D", address: "Manzil kiritilmagan", phone: "+998 90 000 00 00" },
-      { name: "Raxmatullayev Ulug'bek", class: "8-D", address: "Manzil kiritilmagan", phone: "+998 90 000 00 00" },
-      { name: "Sirojov Sardor", class: "8-D", address: "Manzil kiritilmagan", phone: "+998 90 000 00 00" },
-      { name: "Sodiqov Damir", class: "8-D", address: "Manzil kiritilmagan", phone: "+998 90 000 00 00" },
-      { name: "Turakulov Otabek", class: "8-D", address: "Manzil kiritilmagan", phone: "+998 90 000 00 00" },
-      { name: "Tuychikulov Jamshed", class: "8-D", address: "Manzil kiritilmagan", phone: "+998 90 000 00 00" },
-      { name: "Ulmasov Amirjon", class: "8-D", address: "Manzil kiritilmagan", phone: "+998 90 000 00 00" },
-      { name: "Yulbarisova Zebo", class: "8-D", address: "Manzil kiritilmagan", phone: "+998 90 000 00 00" },
-      { name: "Zoxirov Qodir", class: "8-D", address: "Manzil kiritilmagan", phone: "+998 90 000 00 00" }
+    const SITE_PASSWORD = "12345";
+
+    const defaultStudents = [
+      { name: "Abdullayev Nuriddin", address: "Manzil kiritilmagan", phone: "+998 90 000 00 00" },
+      { name: "Abdumannonova Shaxzoda", address: "Manzil kiritilmagan", phone: "+998 90 000 00 00" },
+      { name: "Axmadjonov Shoxrux", address: "Manzil kiritilmagan", phone: "+998 90 000 00 00" },
+      { name: "Alimov Umid", address: "Manzil kiritilmagan", phone: "+998 90 000 00 00" },
+      { name: "Amridinova Shaxzoda", address: "Manzil kiritilmagan", phone: "+998 90 000 00 00" },
+      { name: "Aripova Aziza", address: "Manzil kiritilmagan", phone: "+998 90 000 00 00" },
+      { name: "Ashurov Davlat", address: "Manzil kiritilmagan", phone: "+998 90 000 00 00" },
+      { name: "Berdiyev Samirjon", address: "Manzil kiritilmagan", phone: "+998 90 000 00 00" },
+      { name: "Djamshedov Zarshed", address: "Manzil kiritilmagan", phone: "+998 90 000 00 00" },
+      { name: "Erkinov Muhammadamin", address: "Manzil kiritilmagan", phone: "+998 90 000 00 00" },
+      { name: "Erkinova Nargiza", address: "Manzil kiritilmagan", phone: "+998 90 000 00 00" },
+      { name: "Hamidov Umid", address: "Manzil kiritilmagan", phone: "+998 90 000 00 00" },
+      { name: "Hamroqulova E'zozabonu", address: "Manzil kiritilmagan", phone: "+998 90 000 00 00" },
+      { name: "Hasanboyeva Sabina", address: "Manzil kiritilmagan", phone: "+998 90 000 00 00" },
+      { name: "Juraboyeva Charos", address: "Manzil kiritilmagan", phone: "+998 90 000 00 00" },
+      { name: "Mamatkulova Charos", address: "Manzil kiritilmagan", phone: "+998 90 000 00 00" },
+      { name: "Orzikulov Laziz", address: "Manzil kiritilmagan", phone: "+998 90 000 00 00" },
+      { name: "Raxmatullayev Ulug'bek", address: "Manzil kiritilmagan", phone: "+998 90 000 00 00" },
+      { name: "Sirojov Sardor", address: "Manzil kiritilmagan", phone: "+998 90 000 00 00" },
+      { name: "Sodiqov Damir", address: "Manzil kiritilmagan", phone: "+998 90 000 00 00" },
+      { name: "Turakulov Otabek", address: "Manzil kiritilmagan", phone: "+998 90 000 00 00" },
+      { name: "Tuychikulov Jamshed", address: "Manzil kiritilmagan", phone: "+998 90 000 00 00" },
+      { name: "Ulmasov Amirjon", address: "Manzil kiritilmagan", phone: "+998 90 000 00 00" },
+      { name: "Yulbarisova Zebo", address: "Manzil kiritilmagan", phone: "+998 90 000 00 00" },
+      { name: "Zoxirov Qodir", address: "Manzil kiritilmagan", phone: "+998 90 000 00 00" }
     ];
 
-    const gridEl = document.getElementById("catalogGrid");
-    const countEl = document.getElementById("count");
-    const searchEl = document.getElementById("searchInput");
+    let students = JSON.parse(localStorage.getItem("students_8d_data")) || defaultStudents;
 
+    // Parol tugmalari
+    const passwordInput = document.getElementById("passwordInput");
+    function pressKey(num) { passwordInput.value += num; }
+    function clearKey() { passwordInput.value = passwordInput.value.slice(0, -1); }
+
+    function unlockSite() {
+      document.getElementById("loginScreen").classList.add("hidden");
+      document.getElementById("mainApp").classList.remove("hidden");
+      sessionStorage.setItem("unlocked_8d", "true");
+    }
+
+    function checkPassword() {
+      if (passwordInput.value === SITE_PASSWORD) {
+        unlockSite();
+      } else {
+        document.getElementById("errorMsg").textContent = "Noto'g'ri parol! 12345 ni tering.";
+        passwordInput.value = "";
+      }
+    }
+
+    if (sessionStorage.getItem("unlocked_8d") === "true") unlockSite();
+    document.getElementById("loginBtn").addEventListener("click", checkPassword);
+    passwordInput.addEventListener("keydown", (e) => { if (e.key === "Enter") checkPassword(); });
+    document.getElementById("logoutBtn").addEventListener("click", () => {
+      sessionStorage.removeItem("unlocked_8d");
+      location.reload();
+    });
+
+    // Bo'limlarni almashtirish (Katalog <-> Rabochiy stol)
+    const tabCatalog = document.getElementById("tabCatalog");
+    const tabWorkspace = document.getElementById("tabWorkspace");
+    const catalogGrid = document.getElementById("catalogGrid");
+    const workspaceSection = document.getElementById("workspaceSection");
+    const catalogHeader = document.getElementById("catalogHeader");
+    const workspaceHeader = document.getElementById("workspaceHeader");
+
+    tabCatalog.addEventListener("click", () => {
+      tabCatalog.classList.add("btn-primary");
+      tabWorkspace.classList.remove("btn-primary");
+      catalogGrid.classList.remove("hidden");
+      catalogHeader.classList.remove("hidden");
+      workspaceSection.classList.add("hidden");
+      workspaceHeader.classList.add("hidden");
+      renderCatalog(document.getElementById("searchInput").value);
+    });
+
+    tabWorkspace.addEventListener("click", () => {
+      tabWorkspace.classList.add("btn-primary");
+      tabCatalog.classList.remove("btn-primary");
+      workspaceSection.classList.remove("hidden");
+      workspaceHeader.classList.remove("hidden");
+      catalogGrid.classList.add("hidden");
+      catalogHeader.classList.add("hidden");
+      renderWorkspace();
+    });
+
+    // Katalogni chizish
     function renderCatalog(filterText = "") {
       const query = filterText.trim().toLowerCase();
       const filtered = students.filter(s =>
@@ -239,41 +387,79 @@
         s.phone.toLowerCase().includes(query)
       );
 
-      gridEl.innerHTML = "";
+      document.getElementById("count").textContent = filtered.length;
+      catalogGrid.innerHTML = "";
 
-      if (filtered.length === 0) {
-        gridEl.innerHTML = `<div class="empty-box">So'rovingiz bo'yicha ma'lumot topilmadi.</div>`;
-      } else {
-        filtered.forEach((student, index) => {
-          const cleanPhone = student.phone.replace(/\s+/g, "");
-          const card = document.createElement("div");
-          card.className = "student-card";
-          card.innerHTML = `
-            <div>
-              <div class="card-header">
-                <span class="student-num">#${index + 1} • ${student.class}</span>
-              </div>
-              <div class="student-name">${student.name}</div>
-            </div>
-            <div class="info-row">
-              <div class="info-item">
-                <span class="info-label">Manzil:</span>
-                <span>${student.address}</span>
-              </div>
-              <div class="info-item">
-                <span class="info-label">Telefon:</span>
-                <a class="phone-link" href="tel:${cleanPhone}">${student.phone}</a>
-              </div>
-            </div>
-          `;
-          gridEl.appendChild(card);
-        });
-      }
-
-      countEl.textContent = `Ko'rsatilmoqda: ${filtered.length} / ${students.length} nafar`;
+      filtered.forEach((student, index) => {
+        const cleanPhone = student.phone.replace(/\s+/g, "");
+        const card = document.createElement("div");
+        card.className = "student-card";
+        card.innerHTML = `
+          <div>
+            <span class="student-num">#${index + 1} • 8-D</span>
+            <div class="student-name">${student.name}</div>
+          </div>
+          <div class="info-row">
+            <div class="info-item"><span class="info-label">Manzil:</span><span>${student.address}</span></div>
+            <div class="info-item"><span class="info-label">Telefon:</span><a class="phone-link" href="tel:${cleanPhone}">${student.phone}</a></div>
+          </div>
+        `;
+        catalogGrid.appendChild(card);
+      });
     }
 
-    searchEl.addEventListener("input", (e) => renderCatalog(e.target.value));
+    // Rabochiy stolni chizish
+    function renderWorkspace() {
+      const editList = document.getElementById("editList");
+      editList.innerHTML = "";
+      students.forEach((student, idx) => {
+        const row = document.createElement("div");
+        row.className = "edit-row";
+        row.innerHTML = `
+          <span style="color:#9ca3af;">${idx + 1}.</span>
+          <input type="text" class="edit-input" id="name_${idx}" value="${student.name}" />
+          <input type="text" class="edit-input" id="addr_${idx}" value="${student.address}" />
+          <input type="text" class="edit-input" id="phone_${idx}" value="${student.phone}" />
+          <button class="btn btn-danger" onclick="deleteStudent(${idx})">O'chirish</button>
+        `;
+        editList.appendChild(row);
+      });
+    }
+
+    function saveAllChanges() {
+      students = students.map((_, idx) => ({
+        name: document.getElementById(`name_${idx}`).value.trim() || "Nomsiz",
+        address: document.getElementById(`addr_${idx}`).value.trim() || "Manzil kiritilmagan",
+        phone: document.getElementById(`phone_${idx}`).value.trim() || "+998 90 000 00 00"
+      }));
+      localStorage.setItem("students_8d_data", JSON.stringify(students));
+      const notice = document.getElementById("saveNotice");
+      notice.classList.remove("hidden");
+      setTimeout(() => notice.classList.add("hidden"), 2500);
+    }
+
+    function addStudent() {
+      const name = document.getElementById("newName").value.trim();
+      if (!name) return alert("O'quvchi ismini kiriting!");
+      const address = document.getElementById("newAddress").value.trim() || "Manzil kiritilmagan";
+      const phone = document.getElementById("newPhone").value.trim() || "+998 90 000 00 00";
+      students.push({ name, address, phone });
+      localStorage.setItem("students_8d_data", JSON.stringify(students));
+      document.getElementById("newName").value = "";
+      document.getElementById("newAddress").value = "";
+      document.getElementById("newPhone").value = "";
+      renderWorkspace();
+    }
+
+    function deleteStudent(idx) {
+      if (confirm(`${students[idx].name} ro'yxatdan o'chirilsinmi?`)) {
+        students.splice(idx, 1);
+        localStorage.setItem("students_8d_data", JSON.stringify(students));
+        renderWorkspace();
+      }
+    }
+
+    document.getElementById("searchInput").addEventListener("input", (e) => renderCatalog(e.target.value));
     renderCatalog();
   </script>
 </body>
